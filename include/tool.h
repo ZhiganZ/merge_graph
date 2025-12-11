@@ -74,7 +74,7 @@ namespace my_tool {
         #pragma omp parallel for
         for(int i = begin ; i < end ; ++i){
             if((i-begin) % 10000 == 0)
-                std::cout<<"build hnsw point "<<i<<"/"<<end-begin<<". Now use" << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count() / 1e6 << " seconds" << std::endl;
+                std::cout<<"build hnsw point "<<i<<"/"<<end-begin<<". Now use " << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count() / 1e6 << " seconds" << std::endl;
             hnsw_index->addPoint(dataset[i],i);
         }
         std::cout << "build time: " 

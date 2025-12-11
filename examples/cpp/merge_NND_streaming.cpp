@@ -174,6 +174,7 @@ int main(int argc,char* argv[]) {
     auto start1 = std::chrono::high_resolution_clock::now();
     auto end1 = std::chrono::high_resolution_clock::now();
 
+    // modify here to control nn descent
     std::vector<int> nnd{1,2,3,5,8,12,24,36,54,63};
 
     // std::vector<int> nnd;
@@ -193,9 +194,11 @@ int main(int argc,char* argv[]) {
 
     auto start_all = std::chrono::high_resolution_clock::now();
     if(1){
+        // Modify here part to control how many subgraphs the dataset is split into.
         int num_sub_graphs = 64;
         int point_in_sub_graph = max_elements/num_sub_graphs;
         std::vector<int> offset_of_graph;
+        // Modify here part to control how many subgraphs are used in the merging process.
         int used_num_sub_graphs = num_sub_graphs/2;
         for(int i = 0 ; i < num_sub_graphs ; ++i){
             offset_of_graph.emplace_back(i*point_in_sub_graph);
@@ -205,11 +208,6 @@ int main(int argc,char* argv[]) {
             std::cout<<"offset_of_graph[i] is: "<<offset_of_graph[i]<<std::endl;
         }
         std::vector<mergegraph::HierarchicalNSW<float>*> sub_graphs ;
-        std::vector<mergegraph::HierarchicalNSW<float>*> sub_graphs_32 ;
-        std::vector<mergegraph::HierarchicalNSW<float>*> sub_graphs_16 ;
-        std::vector<mergegraph::HierarchicalNSW<float>*> sub_graphs_8 ;
-        std::vector<mergegraph::HierarchicalNSW<float>*> sub_graphs_4 ;
-        std::vector<mergegraph::HierarchicalNSW<float>*> sub_graphs_2 ;
 
         for(int i = 0 ; i < used_num_sub_graphs ; ++i){
             sub_graphs.emplace_back(new mergegraph::HierarchicalNSW<float>(&space, offset_of_graph[i+1]-offset_of_graph[i], M, ef_1, seed, true));
